@@ -1,0 +1,377 @@
+{% extends "@core/email_layout.twig" %}
+
+
+{% block content %}
+
+<style>
+.page_cabinet_title2{
+  font-size: 16px;
+  font-weight: bold;
+  padding-top: 20px;
+}
+.page_basket_table *{
+  box-sizing: border-box;
+}
+.page_basket .page_title {
+  padding-top: 0px;
+}
+.page_basket_table table {
+  width: 100%;
+  border-spacing: 0;
+}
+.page_basket_table_header {
+  color: #aca89f;
+}
+.page_basket_table_header td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px #9a8359 solid;
+  text-align: center;
+}
+.page_basket_table_row td {
+  padding: 10px;
+  border-bottom: 1px #e0d3c0 solid;
+}
+.page_basket_table_row_last td {
+  border-bottom: 0px #e0d3c0 solid;
+}
+.page_basket_table_row_total td {
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+.page_basket_table_row_total_2 {
+  text-align: right;
+  padding-right: 20px;
+}
+.page_basket_table_row_total_3 {
+  text-align: right;
+  font-weight: bold;
+}
+.page_basket_product_image, .page_basket_product_title {
+  display: inline-block;
+  vertical-align: middle;
+}
+.page_basket_product_image img {
+  width: 100px;
+}
+.page_basket_product_title {
+  width: calc(100% - 115px);
+  padding-left: 20px;
+}
+.page_basket_product_title_row {
+  padding-bottom: 10px;
+}
+.page_basket_product_title_row .value {
+  /*color: $theme_color3;*/
+}
+.page_basket_product_title_row:last-child {
+  padding-bottom: 0px;
+}
+.page_basket_product_price {
+  font-weight: bold;
+  text-align: right;
+  min-width: 120px;
+}
+.page_basket_product_buttons {
+  min-width: 200px;
+  text-align: center;
+}
+.page_basket_product_remove {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #f0e9e0;
+  cursor: pointer;
+}
+.page_basket_product_remove img {
+  padding: 18px;
+  width: 50px;
+  height: 50px;
+}
+.page_basket .page_product_basket_minus, .page_basket .page_product_basket_plus {
+  width: 36px;
+  height: 36px;
+  padding: 5px 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+  background-color: transparent;
+  border: 2px #e0d3c0 solid;
+  outline: 0;
+  cursor: pointer;
+  /*width: 46px;*/
+}
+.page_basket_table--mobile .page_basket_product_info {
+  position: relative;
+}
+.page_basket_table--mobile .page_basket_product_remove {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.page_basket_table--mobile .page_basket_product_price {
+  text-align: center;
+  font-weight: normal;
+}
+.page_basket_table--mobile .page_basket_product_price span {
+  font-weight: bold;
+}
+.page_basket_table--mobile .page_basket_product_buttons {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.page_basket_table--mobile .page_basket_product_image2 {
+  display: none;
+}
+.page_basket_table--mobile .page_basket_product_image2 img {
+  height: 200px;
+  max-width: 100%;
+}
+.page_basket_table--mobile .page_basket_product_title {
+  padding-right: 50px;
+}
+.page_basket_table--mobile .page_basket_product_unit {
+  display: block;
+  padding-top: 10px;
+}
+.page_basket_table--mobile .page_basket_table_row_total {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 2px #9a8359 solid;
+  text-align: center;
+}
+.page_basket_table--mobile .page_basket_table_row_total_1, .page_basket_table--mobile .page_basket_table_row_total_2 {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.page_basket_table--mobile .page_basket_clear_button {
+  display: none;
+}
+.page_basket_table--mobile .page_basket_product_remove2 {
+  text-align: center;
+  padding-top: 20px;
+}
+.page_basket_table--mobile .page_basket_product_remove2 button {
+  padding: 5px 10px;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  background-color: transparent;
+  border: 2px #9a8359 solid;
+  outline: 0;
+  cursor: pointer;
+}
+.page_basket_table--mobile .page_product_basket_minus, .page_basket_table--mobile .page_product_basket_plus {
+  width: 46px;
+  height: 46px;
+}
+.page_basket_table--mobile .page_basket_product_count {
+  text-align: center;
+}
+/* Cabinet invoice */
+.page_cabinet .page_basket_table table {
+  width: 100%;
+  border-spacing: 0;
+}
+.page_cabinet .page_basket_table_header th {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px #9a8359 solid;
+  font-weight: normal;
+}
+.page_cabinet .page_basket_table_row td {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px #e0d3c0 solid;
+}
+.page_cabinet .page_basket_product_image, .page_cabinet .page_basket_product_title {
+  display: inline-block;
+  vertical-align: middle;
+}
+.page_cabinet .page_basket_product_price {
+  font-weight: bold;
+  text-align: right;
+}
+.page_cabinet .page_basket_table_row_total td {
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+.page_cabinet .page_basket_table_row_total_2 {
+  text-align: right;
+  padding-right: 20px;
+}
+.page_cabinet .page_basket_table_row_total_3 {
+  text-align: right;
+}
+.page_cabinet .page_basket_table--mobile {
+  padding-top: 20px;
+}
+.page_cabinet .page_basket_table--mobile .page_basket_product_price {
+  text-align: center;
+  padding-top: 10px;
+}
+.page_cabinet .page_basket_table--mobile .page_basket_table_row_total_2 {
+  padding-right: 0px;
+  margin-left: 0;
+  margin-right: 0;
+}
+@media (max-width: 700px) {
+  .page_basket .page_basket_table--mobile .page_basket_product_remove, .page_cabinet .page_basket_table--mobile .page_basket_product_remove {
+    display: none;
+  }
+  .page_basket .page_basket_table--mobile .page_basket_product_image, .page_cabinet .page_basket_table--mobile .page_basket_product_image {
+    display: none;
+  }
+  .page_basket .page_basket_table--mobile .page_basket_product_image2, .page_cabinet .page_basket_table--mobile .page_basket_product_image2 {
+    display: block;
+  }
+  .page_basket .page_basket_table--mobile .page_basket_product_title, .page_cabinet .page_basket_table--mobile .page_basket_product_title {
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 20px;
+  }
+  .page_basket_invoice .section__wrap {
+    background-color: #f0e9e0;
+    padding: 0px;
+  }
+  .page_basket_invoice .page_basket_invoice_wrap {
+    padding: 30px;
+  }
+  .page_basket_invoice .page_basket_invoice_client_inline {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .page_basket_invoice .page_basket_invoice_client_inline_item {
+    width: 100%;
+    display: block;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .page_basket_invoice .web_form .web_form_line {
+    margin-bottom: 0px;
+  }
+  .page_basket_invoice .web_form .web_form__row, .page_basket_invoice .web_form .web_form_row {
+    margin-bottom: 20px;
+  }
+}
+</style>
+
+
+<div class='page_cabinet page_basket'>
+	<div class='page_basket_client'>
+		
+		<p>
+			<label for="type">Номер инвойса:</label>
+		<br>
+			{{ invoice.id }}
+		</p>
+		
+		{% for data in client_data_text %}
+			{% if data.value %}
+			<p>
+				<label for="type">{{ data.title }}:</label>
+			<br>
+				{{ data.value }}
+			</p>
+			{% endif %}
+		{% endfor %}
+
+		<p>
+			<label for="type">Цена:</label>
+		<br>
+			{{ function('\\Elberos\\formatMoney', invoice.price) }} тг
+		</p>
+
+		{% if invoice.comment %}
+		<p>
+			<label for="type">Комментарий:</label>
+		<br>
+			{{ invoice.comment }}
+		</p>
+		{% endif %}
+
+		<p>
+			<label for="type">Дата:</label>
+		<br>
+			{{ function('\\Elberos\\wp_from_gmtime', invoice.gmtime_add) }}
+		</p>
+	</div>
+
+	<div class='page_cabinet_title2'>
+		Товары
+	</div>
+
+	<div class='page_basket_table page_basket_table--mobile'>
+		
+		{% set basket_sum_total = 0 %}
+		
+		{% for basket_info in basket_data %}
+		
+			{% set offer_price_id = basket_info.offer_price_id %}
+			{% set basket_product_count = function("intval", basket_info.count) %}
+			
+			<div class='page_basket_table_row'
+				data-product-id='{{ basket_info.product_id }}'
+				data-offer-price-id='{{ basket_info.offer_price_id }}'
+				data-price='{{ basket_info.offer_price }}'
+				data-count='{{ basket_product_count }}'
+			>
+				<div class='page_basket_product_info'>
+					<div class='page_basket_product_image'>
+						<img src='{{ basket_info.product_main_photo_url }}' />
+					</div>
+					<div class='page_basket_product_title'>
+						<div class='page_basket_product_title_row'>
+							{{ basket_info.product_name }}
+						</div>
+						<div class='page_basket_product_image2'>
+							<img src='{{ basket_info.product_main_photo_url }}' />
+						</div>
+						<div class='page_basket_product_title_row'>
+							Артикул: <span class='value'>{{ basket_info.product_vendor_code }}</span>
+						</div>
+					</div>
+				</div>
+				<div class='page_basket_product_count'>
+					Количество: {{ basket_product_count }} {{ basket_info.offer_unit }}
+				</div>
+				<div class='page_basket_product_price page_basket_product_price_total'>
+					Цена: 
+					<span>
+						{{ function("\\Elberos\\formatMoney", basket_info.offer_price * basket_product_count) }}
+					</span> тг
+				</div>
+			</div>
+			{% set basket_sum_total = basket_sum_total + basket_info.offer_price * basket_product_count %}
+			
+		{% endfor %}
+		
+		<div class='page_basket_table_row_total'>
+			<div class='page_basket_table_row_total_1'>
+				Итого:
+			</div>
+			<div class='page_basket_table_row_total_2' colspan='1'>
+				<span class='page_basket_table_row_total_value'>
+					{{ function("\\Elberos\\formatMoney", basket_sum_total) }}
+				</span> тг
+			</div>
+		</div>
+		
+	</div>
+	
+	<div class='page_cabinet_link'>
+		<a href='{{ admin_link | raw }}'>Перейти по ссылке, чтобы проверить статус заказа</a>
+	</div>
+</div>
+
+{% endblock %}

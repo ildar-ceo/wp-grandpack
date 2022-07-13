@@ -1,0 +1,25 @@
+{% extends "@core/email_layout.twig" %}
+
+
+{% block content %}
+
+<div style='text-align: center;' class='auth'>
+	<b style='font-size: 20px'>
+		Регистрация на сайте "{{ site_name }}" прошла успешно
+	</b>
+	<br/>
+	Ваш логин: {{ user.email }}
+	<br/>
+	Ваш пароль от сайта:
+	<div style='margin-top: 40px; margin-bottom: 20px;' class='auth__password_wrap'>
+		<div style='padding: 5px 10px;display: inline-block;background-color: #f8f8f8;border: 1px #ccc solid;
+			font-size: 16px;margin-right: auto;margin-left: auto;margin-top: 10px;margin-bottom: 20px;' class='auth__password'>
+			{{ password }}
+		</div>
+	</div>
+	<br/>
+	<br/>
+	<a class='link' href='{{ auth_url }}'>Перейти на страницу авторизации</a>
+</div>
+
+{% endblock %}
