@@ -7,10 +7,10 @@ namespace GrandPack;
 if (!defined('ABSPATH')) exit;
 
 
-if ( !class_exists( City_Table::class ) && class_exists( \Elberos\Table::class ) ) 
+if ( !class_exists( Contact_Table::class ) && class_exists( \Elberos\Table::class ) ) 
 {
 
-class City_Table extends \Elberos\Table 
+class Contact_Table extends \Elberos\Table 
 {
 	
 	/**
@@ -19,7 +19,7 @@ class City_Table extends \Elberos\Table
 	function get_table_name()
 	{
 		global $wpdb;
-		return $wpdb->base_prefix . 'app_city';
+		return $wpdb->base_prefix . 'app_contacts';
 	}
 	
 	
@@ -29,7 +29,7 @@ class City_Table extends \Elberos\Table
 	 */
 	function get_page_name()
 	{
-		return "site-cities";
+		return "site-contacts";
 	}
 	
 	
@@ -39,7 +39,7 @@ class City_Table extends \Elberos\Table
 	 */
 	static function createStruct()
 	{
-		$struct = \GrandPack\City::create
+		$struct = \GrandPack\Contact::create
 		(
 			"admin_app_city",
 			function ($struct)
@@ -48,37 +48,40 @@ class City_Table extends \Elberos\Table
 				
 				$struct->table_fields =
 				[
-					"name_ru",
-					"price_type_id",
+					"city_name_ru",
+					"address",
+					"phone",
+					"email",
 					"pos",
 				];
 				
 				$struct->form_fields =
 				[
-					"name_ru",
-					"price_type_id",
+					"city_id",
+					"address",
+					"phone",
+					"email",
 					"location",
-					"zoom",
 					"pos",
 				];
 				
-				$price_types = $wpdb->get_results
+				$cities = $wpdb->get_results
 				(
-					"select * from " . $wpdb->base_prefix . "elberos_commerce_price_types as price_types " .
+					"select * from " . $wpdb->base_prefix . "app_city as app_city " .
 					"where is_deleted=0",
 					ARRAY_A
 				);
-				$price_types = array_map
+				$cities = array_map
 				(
 					function ($item)
 					{
-						return ["id"=>$item["id"],"value"=>$item["name"]];
+						return ["id"=>$item["id"],"value"=>$item["name_ru"]];
 					},
-					$price_types
+					$cities
 				);
 				
-				$struct->editField("price_type_id", [
-					"options"=>$price_types,
+				$struct->editField("city_id", [
+					"options"=>$cities,
 				]);
 				
 				return $struct;
@@ -100,7 +103,9 @@ class City_Table extends \Elberos\Table
 	
 	
 	
-	// Действия
+	/**
+	 * Действия
+	 */
 	function get_bulk_actions()
     {
 		$is_deleted = isset($_REQUEST['is_deleted']) ? $_REQUEST['is_deleted'] : "";
@@ -179,8 +184,15 @@ class City_Table extends \Elberos\Table
 	 */
 	function prepare_table_items_filter($params)
 	{
+		global $wpdb;
+		
 		$params = parent::prepare_table_items_filter($params);
-		$params["order_by"] = "pos desc, name_ru asc";
+		
+		$params["order_by"] = "pos desc, city_name_ru asc";
+		$params["fields"][] = "city.name_ru as city_name_ru";
+		$params["join"][] = " left join " . $wpdb->base_prefix . "app_city as city on " .
+			"( city.id = t.city_id ) ";
+		
 		return $params;
 	}
 	

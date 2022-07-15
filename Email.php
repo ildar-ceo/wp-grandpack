@@ -15,9 +15,9 @@ class Email
 	static function register_hooks()
 	{
 		add_action('elberos_user_recovery_password1_after', 
-			'\\App\\EmailController::elberos_user_recovery_password1_after');
+			'\\GrandPack\\Email::elberos_user_recovery_password1_after');
 		add_action('elberos_user_register_after',
-			'\\App\\EmailController::elberos_user_register_after');
+			'\\GrandPack\\Email::elberos_user_register_after');
 	}
 	
 	
@@ -74,7 +74,7 @@ class Email
 	{
 		if ($client)
 		{
-			$title = "Ваш код восстановления пароля от сайта \"" . static::$site_name . "\"";
+			$title = "Ваш код восстановления пароля от сайта \"" . static::getSiteName() . "\"";
 			
 			/* Send email to user */
 			\Elberos\send_email
@@ -85,7 +85,7 @@ class Email
 				[
 					"title" => $title,
 					"client" => $client,
-					"site_name" => static::$site_name,
+					"site_name" => static::getSiteName(),
 				],
 				[
 					"is_delete" => 1,

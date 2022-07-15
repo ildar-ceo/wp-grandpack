@@ -27,6 +27,7 @@ class GrandPack_Plugin
 			function()
 			{
 				require_once __DIR__ . "/admin/City_Table.php";
+				require_once __DIR__ . "/admin/Contact_Table.php";
 			}
 		);
 		add_action('admin_menu', 'Grandpack_Plugin::register_admin_menu');
@@ -40,6 +41,7 @@ class GrandPack_Plugin
 			function()
 			{
 				include __DIR__ . "/admin/City.php";
+				include __DIR__ . "/admin/Contact.php";
 			},
 		);
 		
@@ -115,6 +117,18 @@ class GrandPack_Plugin
 			function()
 			{
 				$table = new \GrandPack\City_Table();
+				$table->display();
+			}
+		);
+		
+		add_submenu_page
+		(
+			'site-content', 
+			'Контакты', 'Контакты',
+			'manage_options', 'site-contacts',
+			function()
+			{
+				$table = new \GrandPack\Contact_Table();
 				$table->display();
 			}
 		);

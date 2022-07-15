@@ -50,6 +50,24 @@ class City extends \Elberos\StructBuilder
 				"label" => "Позиция",
 				"type" => "input",
 			])
+			
+			->addField
+			([
+				"api_name" => "location",
+				"label" => "Центр города",
+				"description" => "Метка с сайта https://yandex.ru/map-constructor/location-tool/ \n" .
+				"вида: [55.75399399999374,37.62209300000001]",
+				"type" => "input",
+			])
+			
+			->addField
+			([
+				"api_name" => "zoom",
+				"label" => "Масштаб",
+				"default" => 12,
+				"description" => "12 по умолчанию",
+				"type" => "input",
+			])
 		;
 	}
 	
